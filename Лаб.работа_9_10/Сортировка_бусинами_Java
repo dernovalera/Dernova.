@@ -1,0 +1,31 @@
+public class Main {
+    public static void beadSort(int[] arr) { // метод сортировки бусинами
+        int maxVal = java.util.Arrays.stream(arr).max().getAsInt(); // ищем максимальный элемент массива
+        int[][] beads = new int[maxVal][arr.length]; // создаем матрицу, где строки - уровни бусин, столбцы - элементы массива
+        for (int i = 0; i < arr.length; i++) { // проходим по каждому элементу массива
+            for (int j = 0; j < arr[i]; j++) { // для числа бусин равного значению элемента
+                beads[j][i] = 1; // ставим бусинку на уровне j для i-го элемента
+            }
+        }
+
+        for (int[] row : beads) { // для каждой строки (уровня бусин)
+            int sumRow = 0; // счетчик бусин на этом уровне
+            for (int bit : row) sumRow += bit; // подсчет бусин
+            java.util.Arrays.fill(row, 0); // очищаем строку, чтобы все было равно 0
+            for (int i = 0; i < sumRow; i++) row[i] = 1; // заполняем снизу вверх бусинами (для имитации падения)
+        }
+
+        for (int i = 0; i < arr.length; i++) { // для каждого столбца
+            int count = 0; // подсчет бусин
+            for (int j = 0; j < maxVal; j++) { // проходим по уровням бусин
+                count += beads[j][i]; // сумма бусин в столбце i (подсчет значений)
+            }
+            arr[i] = count; // в исходный массив записываем подсчитанное число = отсортированный результат
+        }
+    }
+    public static void main(String[] args) { // запуск
+        int[] array = {5, 13, 10, 41}; // исходный массив чисел
+        beadSort(array); // вызов функции сортировки бусинами
+        System.out.println("Отсортированный массив: " + java.util.Arrays.toString(array)); // вывод отсортированного массива
+    }
+}
