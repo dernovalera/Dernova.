@@ -1,0 +1,23 @@
+def bucket_sort(array):  # задаем функцию сортировки с помощью корзин
+    if len(array) == 0:  # проверяем, не пустой ли массив
+        return array  # если пустой, возвращаем без изменений
+    min_value = min(array)  # находим минимальное значение в массиве
+    max_value = max(array)  # находим максимальное значение в массиве
+    bucket_count = 3  # задаем количество корзин 
+    bucket_size = (max_value - min_value) / bucket_count  # размер диапазона каждой корзины
+    buckets = [[] for _ in range(bucket_count)]  # создает список, состоящий из пустых подсписков, которые далее заполняются элементами
+    for num in array:  # для каждого элемента исходного массива
+        index = int((num - min_value) / bucket_size)  # определяем, в какую корзину поместить элемент
+        if index == bucket_count:  # если элемент равен max_value, чтобы избежать выхода за границы
+            index -= 1  # помещаем его в последнюю корзину
+        buckets[index].append(num)  # добавляем элемент в выбранную корзину
+    for bucket in buckets:  # для каждой корзины
+        bucket.sort()  # сортируем содержимое корзины
+    sorted_array = []  # создаем новый массив для итогового результата
+    for bucket in buckets:  # объединяем все корзины
+        sorted_array.extend(bucket)  # добавляем содержимое каждой корзины в результат
+    return sorted_array  # возвращаем отсортированный массив
+
+array = [42, 23, 57, 11, 45]  # задаем массив
+sorted_array = bucket_sort(array)  # вызов функции сортировки
+print("Отсортированный массив:", sorted_array)  # вывод результата
