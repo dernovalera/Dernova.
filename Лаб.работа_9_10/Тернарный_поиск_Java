@@ -1,0 +1,28 @@
+public class Main {
+    public static int ternarySearch(int[] arr, int target, int left, int right) { // объявляем метод тернарного поиска
+        if (left > right) // если элементов в массиве нет
+            return -1; // возвращаем -1, элемент не найден
+        int third = (right - left) / 3; // делим диапазон на три части
+        int mid1 = left + third; // точка деления первой трети
+        int mid2 = right - third; // точка деления второй трети
+        if (arr[mid1] == target)  // нашли искомый элемент в первой точке
+            return mid1; // возвращаем его индекс
+        if (arr[mid2] == target)  // нашли искомый элемент во второй точке
+            return mid2; // возвращаем его индекс
+        if (target < arr[mid1]) // если искомое меньше элемента в mid1
+            return ternarySearch(arr, target, left, mid1 - 1); // ищем в первой трети
+        else if (target > arr[mid2]) // если больше элемента в mid2
+            return ternarySearch(arr, target, mid2 + 1, right); // ищем в третьей трети
+        else // между arr[mid1] и arr[mid2]
+            return ternarySearch(arr, target, mid1 + 1, mid2 - 1); // ищем в среднем диапазоне
+    }
+    public static void main(String[] args) { // точка входа
+        int[] arr = {2,6,12,33,52}; // задаем отсортированный массив
+        int target = 52; // число, которое ищем в массиве
+        int index = ternarySearch(arr, target, 0, arr.length - 1); // вызов метода тернарного поиска, создаваемые диапазона поиска
+        if (index != -1) // если индекс не -1, значит элемент найден
+            System.out.println("Элемент " + target + " найден по индексу " + index); // выводим сообщение 
+        else // если индекс равен -1, элемент не найден
+            System.out.println("Элемент " + target + " не найден"); // сообщение, что элемент отсутствует
+    }
+}
