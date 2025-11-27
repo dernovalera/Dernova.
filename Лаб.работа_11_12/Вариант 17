@@ -1,0 +1,18 @@
+class TreeNode:  # создаём класс узла бинарного дерева
+    def __init__(self, data):  # конструктор узла, принимает значение data
+        self.data = data  # сохраняем значение узла
+        self.left = None  # левая ветвь изначально пустая (нет ребёнка)
+        self.right = None   # правая ветвь изначально пустая (нет ребёнка)
+def count_leaves(root):  # функция для подсчёта листьев в дереве с корнем root
+    if root is None:  # если узла нет (пустое поддерево)
+        return 0  # возвращаем 0 - листов здесь нет
+    if root.left is None and root.right is None:  # если у узла нет левого и правого ребёнка
+        return 1  # это лист, считаем 1
+    return count_leaves(root.left) + count_leaves(root.right)  # иначе суммируем листья левого и правого поддеревьев
+# пример дерева:
+root = TreeNode(1)  # создаём корень дерева с данными 1
+root.left = TreeNode(2)  # создаём левый дочерний узел с данными 2
+root.right = TreeNode(3)  # создаём правый дочерний узел с данными 3
+root.right.left = TreeNode(4)  # левый ребёнок узла 3 с данными 4
+root.right.right = TreeNode(5)  # правый ребёнок узла 3 с данными 5
+print(count_leaves(root))  # вызываем функцию подсчёта листьев, выводим результат 
